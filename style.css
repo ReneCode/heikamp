@@ -8,3 +8,25 @@ body {
 .right {
 	float: right;
 }
+
+
+thead {
+	background-color: #bbb;
+}
+.objrow {
+	border: 1px solid black;
+}
+
+.objrow:hover {
+	color: #004444;
+	cursor: pointer;
+	text-decoration: underline;
+}
+
+.objrow:nth-child(even) {
+	background: #cccccc;
+}
+
+.objrow:nth-child(even) {
+	background: #dddddd;
+}

@@ -12,7 +12,7 @@ function dbOpen() {
 
 	//mysql_select_db($database);
 
-	$pdo = new PDO("mysql:host=$host;dbname=$database;charset=utf8", 
+	$pdo = new PDO("mysql:host=$host;dbname=$database;charset=UFT-8", 
 							$user, $pw);
 
 	return $pdo;	

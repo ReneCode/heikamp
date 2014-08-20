@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <header>
-	<meta charset="utf-8">
+	<meta content="text/html; charset=utf-8">
 	<title>Objekt Liste</title>
 	<link rel="stylesheet" type="text/css" href="style.css">
 	<script type="text/javascript" src="heikamp.js"></script>
@@ -21,8 +21,8 @@ $pdo = dbOpen();
 	<h1>Objektsuche</h1>
 	<div>
 	<form action="list.php">
-		<div><input type="text" value="<?php echo $sQuery ?>" name="q" />
-		<div class="btn "><input type="submit" value="Suche starten" />
+		<div><input class="search" type="text" value="<?php echo $sQuery ?>" name="q" />
+		<div class="btn search"><input type="submit" value="Suche starten" />
 	</form>
 	</div>
 	<div>
@@ -34,12 +34,11 @@ $pdo = dbOpen();
 	 		<td>Bundesland</td>
 	 		<td>Strasse</td>
 	 		<td>Objekttyp</td>
-	 		<td>Größe</td>
-	 		<td></td>
+	 		<td>Gr&ouml;&szlig;e</td>
 	 	</thead>
 	 	<?php
 
-$aTmp = split(" ", $sQuery);
+$aTmp = explode(" ", $sQuery);
 $aQ = array();
 for ($i=0; $i<count($aTmp); $i++) {
 	if ($aTmp[$i] != "") {
@@ -48,7 +47,6 @@ for ($i=0; $i<count($aTmp); $i++) {
 }
 
 $aFilter = array();
-
 $sql = "select * from tblobject WHERE ";
 
 for ($i=0; $i<count($aQ); $i++) {
@@ -73,7 +71,7 @@ while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
 	$objekttyp = $row['type']; 
 	$groesse = $row['groesse']; 
 
-	print_r("<tr><td>$nr</td><td>$stadt</td><td>$plz</td><td>$bundesland</td><td>$strasse</td><td>$objekttyp</td><td>$groesse</td></tr>");
+	print_r("<tr class=\"objrow\" onclick=\"onRowClick($nr);\"><td>$nr</td><td>$stadt</td><td>$plz</td><td>$bundesland</td><td>$strasse</td><td>$objekttyp</td><td>$groesse</td></tr>");
 }
 
 
