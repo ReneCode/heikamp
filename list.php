@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html>
 <header>
-	<meta charset="utf-8">
+	<meta http-equiv="content-type" content="text/html; charset=ISO-8859-1">
 	<title>Objekt Liste</title>
-	<link rel="stylesheet" type="text/css" href="style.css">
+	<link rel="stylesheet" type="text/css" href="style.css" />
 	<script type="text/javascript" src="heikamp.js"></script>
 </header>
 
@@ -34,12 +34,12 @@ $pdo = dbOpen();
 	 		<td>Bundesland</td>
 	 		<td>Strasse</td>
 	 		<td>Objekttyp</td>
-	 		<td>Größe</td>
+	 		<td>Gr&ouml;&szlig;e</td>
 	 		<td></td>
 	 	</thead>
 	 	<?php
 
-$aTmp = split(" ", $sQuery);
+$aTmp = explode(" ", $sQuery);
 $aQ = array();
 for ($i=0; $i<count($aTmp); $i++) {
 	if ($aTmp[$i] != "") {
