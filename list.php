@@ -3,7 +3,7 @@
 <header>
 	<meta content="text/html; charset=utf-8">
 	<title>Objekt Liste</title>
-	<link rel="stylesheet" type="text/css" href="style.css">
+	<link rel="stylesheet" type="text/css" href="style.css" />
 	<script type="text/javascript" src="heikamp.js"></script>
 </header>
 
