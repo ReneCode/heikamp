@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html>
-<header>
+<head>
 	<meta content="text/html; charset=utf-8">
 	<title>Objekt Liste</title>
 	<link rel="stylesheet" type="text/css" href="style.css" />
 	<script type="text/javascript" src="heikamp.js"></script>
-</header>
+</head>
 
 <?php
 
@@ -15,28 +15,31 @@ require('utility.php');
 $sQuery = $_GET["q"];
 
 $pdo = dbOpen();
+$status = getDatabaseStatus($pdo);
 ?>
 
 <body>
-	<h1>Objektsuche</h1>
-	<div>
-	<form action="list.php">
-		<div><input class="search" type="text" value="<?php echo $sQuery ?>" name="q" />
-		<div class="btn search"><input type="submit" value="Suche starten" />
-	</form>
-	</div>
-	<div>
-	 <table>
-	 	<thead>
-	 		<td>Nr.</td>
-	 		<td>Stadt</td>
-	 		<td>PLZ</td>
-	 		<td>Bundesland</td>
-	 		<td>Strasse</td>
-	 		<td>Objekttyp</td>
-	 		<td>Gr&ouml;&szlig;e</td>
-	 	</thead>
-	 	<?php
+	<div id="all">
+		<h2>Objektsuche</h2>
+		<div id="status"><?php echo $status ?></div>
+		<div id="search">
+		<form action="list.php">
+			<div>Suchbegriffe z.B.: NRW Grundst&uuml;ck:</div>
+			<input class="txtsearch" placeholder="Suchbegriffe" type="text" value="<?php echo $sQuery ?>" name="q" />
+			<input class="btnsearch" type="submit" value="Suche starten" />
+		</form>
+		</div>
+		<div>
+		 	<table>
+			 	<thead>
+			 		<td>Stadt</td>
+			 		<td>PLZ</td>
+			 		<td>Bundesland</td>
+			 		<td>Strasse</td>
+			 		<td>Objekttyp</td>
+			 		<td>Gr&ouml;&szlig;e</td>
+			 	</thead>
+<?php
 
 $aTmp = explode(" ", $sQuery);
 $aQ = array();
@@ -58,7 +61,6 @@ for ($i=0; $i<count($aQ); $i++) {
 	$aFilter = array_merge($aFilter, $arr);
 }
 $sql = $sql . " order by stadt,plz,bundesland,strasse";
-
 $stmt = $pdo->prepare($sql);
 $nr = 0;
 $stmt->execute($aFilter);
@@ -70,13 +72,11 @@ while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
 	$strasse = $row['strasse']; 
 	$objekttyp = $row['type']; 
 	$groesse = $row['groesse']; 
-
-	print_r("<tr class=\"objrow\" onclick=\"onRowClick($nr);\"><td>$nr</td><td>$stadt</td><td>$plz</td><td>$bundesland</td><td>$strasse</td><td>$objekttyp</td><td>$groesse</td></tr>");
+	print_r("<tr class=\"objrow\"><td>$stadt</td><td>$plz</td><td>$bundesland</td><td>$strasse</td><td>$objekttyp</td><td>$groesse</td></tr>");
 }
-
-
-	 	?>
-	 </table>
+?>
+		 </table>
+		</div>
 	</div>
 </body>
 
