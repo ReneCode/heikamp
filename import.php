@@ -10,7 +10,7 @@ $fileName = strtolower($_FILES['csvfile']['name']);
 $tmpFile = $_FILES['csvfile']['tmp_name'];
 
 if ($tmpFile == "") {
-	echo 'file missing';
+	echo 'File missing';
 	exit(0);
 }
 
@@ -22,35 +22,24 @@ if(!in_array(end(explode('.', $fileName)), $whitelist))
 }
 
 if (is_uploaded_file($tmpFile)) {
-	echo "<h2>importing file:" . $fileName . "</h2>";
+	echo "<h2>Importing file: $fileName </h2>";
+	$dbo = dbOpen();
+  
+	$sql = "DELETE FROM tblobject";
+	$cnt = $dbo->exec($sql) or die(print_r($dbo->errorInfo(), true));
+	echo "<p>" . $cnt . " old rows deleted</p>";
 
-	$hFile = fopen($tmpFile, "r");
+	$sql = "LOAD DATA LOCAL INFILE '" . $tmpFile . "' INTO TABLE tblobject FIELDS TERMINATED BY ';' IGNORE 1 LINES";
 
-	$nr = 0;
-	$bCont = true;
-	while ($bCont) {
-		$nr++;
-		$colLine = fgetcsv($hFile, 1000, ";");
-		if ($colLine != NULL) {
-			if ($nr == 1) {
+	$cnt = $dbo->exec($sql) or die(print_r($dbo->errorInfo(), true));
+	echo "<p>$cnt new rows added to database</p>";
 
-			}
-			else {
-				echo "<br>" . $colLine[1];
-			}
-		}
-		else {
-			// finish
-			$bCont = false;
-		}
-	}
-	fclose($hFile);
+	$currentDate = date('d.n.Y');
+	echo "<p>set last change to: $currentDate<p>";
+	dbSetOption($dbo, "lastchange", $currentDate);
+
+	echo "<a href=\"list.php\">Liste anzeigen</a>";
+
 }
-
-
-$sQuery = $_GET["q"];
-
-$pdo = dbOpen();
-
 
 ?>

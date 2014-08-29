@@ -21,6 +21,10 @@ $sQuery = $_GET["q"];
 	<div id="all">
 		<h2>Administration</h2>
 		<div id="status"><?php echo $status ?></div>
+		<div>Die CSV-Datei muss diese Felder beinhalten: 
+			Stadt;PLZ;Bundesland;Strasse;Objekttyp;Gr&ouml;&szlig;e.
+		</div>
+
 		<div id="search">
 		<form method="POST" enctype="multipart/form-data" action="import.php">
 			<div>Upload CSV-Datei</div>

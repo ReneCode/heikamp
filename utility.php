@@ -28,6 +28,12 @@ function dbGetOption($pdo, $name) {
 }
 
 
+function dbSetOption($pdo, $name, $val) {
+	$sql = "REPLACE into tbloption (name, val) values (:name, :val)";
+	$stmt = $pdo->prepare($sql);
+	$stmt->execute( array(':name' => $name, ':val' => $val) );
+}
+
 
 function getHtmlOption($dbCon, $name, $currentValue = "") {
 	$arr = dbGetOption($dbCon, $name);
@@ -47,7 +53,6 @@ function getHtmlOption($dbCon, $name, $currentValue = "") {
 	}
 	return $result;
 }
-
 
 
 ?>
