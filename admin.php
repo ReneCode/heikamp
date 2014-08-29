@@ -22,9 +22,9 @@ $sQuery = $_GET["q"];
 		<h2>Administration</h2>
 		<div id="status"><?php echo $status ?></div>
 		<div id="search">
-		<form action="import.php">
+		<form method="POST" enctype="multipart/form-data" action="import.php">
 			<div>Upload CSV-Datei</div>
-			<input type="file" name="import_file" id="importfile">
+			<input type="file" name="csvfile" id="filename">
 			<input class="btn" type="submit" value="Upload" />
 		</form>
 		</div>

@@ -14,7 +14,7 @@ body {
 }
 
 .txtsearch {
-	padding: 5px;
+	padding: 4px;
 	border: 2px solid #ccc;
 	border-radius: 5px;
 	font-size: 1em;
@@ -27,30 +27,34 @@ body {
 }
 
 .btnsearch {
-	padding: 3px 15px;
+	padding: 2px 5px;
 	background: #eeeeee;
 	margin-left: 5px;
-	border: 1 none;
 	border-radius: 5px;
 	cursor: pointer;
 	width: 20%;
 	font-size: 1em;
+	vertical-align: middle;
+}
+
+div #search {
+	margin: 15px 0px 10px;
+	vertical-align: middle;
 }
 
 table {
-	border-spacing: 2px;
+	border-spacing: 0px;
 	width: 100%;
 }
 
 table td {
-	padding: 2px;
+	padding: 3px 1px;
 }
 table thead {
 	background-color: #bbb;
 	font-weight: bold;
 }
 .objrow {
-	border: 1px solid black;
 }
 
 .objrow:nth-child(even) {
@@ -62,5 +66,4 @@ table thead {
 }
 
 .btnsearch {
-
 }
