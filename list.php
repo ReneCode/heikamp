@@ -51,28 +51,31 @@ for ($i=0; $i<count($aTmp); $i++) {
 
 $aFilter = array();
 $sql = "select * from tblobject WHERE ";
-
-for ($i=0; $i<count($aQ); $i++) {
-	if ($i > 0) {
-		$sql = $sql . "AND ";
+$cntQuery = count($aQ);
+if ($cntQuery > 0) {
+	for ($i=0; $i<count($aQ); $i++) {
+		if ($i > 0) {
+			$sql = $sql . "AND ";
+		}
+		$sql = $sql . "(stadt LIKE :q$i OR plz like :q$i OR bundesland like :q$i OR strasse like :q$i OR type like :q$i OR groesse like :q$i) ";
+		$arr = array(":q$i" => "%" . $aQ[$i] . "%");
+		$aFilter = array_merge($aFilter, $arr);
 	}
-	$sql = $sql . "(stadt LIKE :q$i OR plz like :q$i OR bundesland like :q$i OR strasse like :q$i OR type like :q$i OR groesse like :q$i) ";
-	$arr = array(":q$i" => "%" . $aQ[$i] . "%");
-	$aFilter = array_merge($aFilter, $arr);
-}
-$sql = $sql . " order by stadt,plz,bundesland,strasse";
-$stmt = $pdo->prepare($sql);
-$nr = 0;
-$stmt->execute($aFilter);
-while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-	$nr++;
-	$stadt = $row['stadt']; 
-	$plz = $row['plz']; 
-	$bundesland = $row['bundesland']; 
-	$strasse = $row['strasse']; 
-	$objekttyp = $row['type']; 
-	$groesse = $row['groesse']; 
-	print_r("<tr class=\"objrow\"><td>$stadt</td><td>$plz</td><td>$bundesland</td><td>$strasse</td><td>$objekttyp</td><td>$groesse</td></tr>");
+	$sql = $sql . " order by stadt,plz,bundesland,strasse";
+	$stmt = $pdo->prepare($sql);
+	$nr = 0;
+	$stmt->execute($aFilter);
+	while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+		$nr++;
+		$stadt = $row['stadt']; 
+		$plz = $row['plz']; 
+		$bundesland = $row['bundesland']; 
+		$strasse = $row['strasse']; 
+		$objekttyp = $row['type']; 
+		$groesse = $row['groesse']; 
+		print_r("<tr class=\"objrow\"><td>$stadt</td><td>$plz</td><td>$bundesland</td><td>$strasse</td><td>$objekttyp</td><td>$groesse</td></tr>");
+	}
+	
 }
 ?>
 		 </table>

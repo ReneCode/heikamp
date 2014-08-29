@@ -1,23 +1,13 @@
 <?php
 
+require_once('config.inc.php');
 
-function dbOpen() {
-
-	$host = 'localhost';
-	$user = 'heikamp';
-	$pw = 'heikamp';
-	$database = 'heikamp';
-
-	//$dbCon = mysql_connect($host, $user, $pw) or die ("Error connecting to db-server");
-
-	//mysql_select_db($database);
-
-	$pdo = new PDO("mysql:host=$host;dbname=$database;charset=UFT-8", 
-							$user, $pw);
-
-	return $pdo;	
+function dbOpen(){
+    $dsn = 'mysql:dbname='.C_BASE.';host='.C_HOST;
+    $dbh = new PDO($dsn, C_USER, C_PASS);
+    $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    return $dbh;
 }
-
 
 
 
