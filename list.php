@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<meta content="text/html; charset=utf-8">
+	<meta content="text/html"; charset="utf-8">
 	<title>Objekt Liste</title>
 	<link rel="stylesheet" type="text/css" href="style.css" />
 	<script type="text/javascript" src="heikamp.js"></script>
@@ -41,6 +41,7 @@ $status = getDatabaseStatus($pdo);
 			 	</thead>
 <?php
 
+// split the query string
 $aTmp = explode(" ", $sQuery);
 $aQ = array();
 for ($i=0; $i<count($aTmp); $i++) {
@@ -49,6 +50,8 @@ for ($i=0; $i<count($aTmp); $i++) {
 	}
 }
 
+// query on all fields
+// combine the query-strings with AND
 $aFilter = array();
 $sql = "select * from tblobject WHERE ";
 $cntQuery = count($aQ);

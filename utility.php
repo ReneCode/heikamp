@@ -27,6 +27,24 @@ function dbGetOption($pdo, $name) {
 	return $arr;
 }
 
+function dbInsertObjectRow($pdo, $data) {
+	$cnt = count($data);
+	if ($cnt < 6) {
+		return 0;
+	}
+	$sql = "INSERT into tblobject (stadt, plz, bundesland, strasse, type, groesse) VALUES 
+													(:stadt , :plz , :bundesland , :strasse , :type , :groesse )";
+	$stmt = $pdo->prepare($sql);
+	$stmt->execute( array(
+			':stadt' 	=> $data[0], 
+			':plz'		 	=> $data[1], 
+			':bundesland' => $data[2], 
+			':strasse' 	=> $data[3], 
+			':type' 		=> $data[4], 
+			':groesse' 	=> $data[5]  
+		) );
+}
+
 
 function dbSetOption($pdo, $name, $val) {
 	$sql = "REPLACE into tbloption (name, val) values (:name, :val)";
