@@ -3,7 +3,15 @@ body {
   font-size: 0.8em;
 }
 
+code {
+	font-size: 1.2em;
+	font-weight: bold;
+}
 
+
+.example {
+	font-style: italic;
+}
 
 .right {
 	float: right;
