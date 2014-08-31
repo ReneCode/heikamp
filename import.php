@@ -1,3 +1,10 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta content="text/html"; charset="utf-8">
+	<title>Import</title>
+	<link rel="stylesheet" type="text/css" href="style.css" />
+</head>
 <?php
 
 //$fileName = $_GET["filename"];
@@ -35,6 +42,7 @@ if (is_uploaded_file($tmpFile)) {
 	if ($hFile != FALSE) {
 		$bCont = true;
 		$line = 0;
+		$converted = 0;
 		while ($bCont) {
 			$data = fgetcsv($hFile, 10000, ";");
 			if ($data == NULL) {
@@ -44,13 +52,23 @@ if (is_uploaded_file($tmpFile)) {
 				$line++;
 				// ignore first line
 				if ($line > 1) {
+
+					// convert the strings to utf8 if they are not
+					// http://stackoverflow.com/questions/21371208/ansi-encoded-file-converting-to-utf-8-encoded-file-with-php-script
+					for ($i=0; $i<count($data); $i++) {
+						if( !mb_check_encoding( $data[$i], 'UTF-8') ) {
+							$data[$i] = utf8_encode($data[$i]);
+							$converted++;
+						}
+					}
+
 					dbInsertObjectRow($dbo, $data);
 					$cnt++;
 				}
 			}
 		}
 	}
-	echo "<p>$cnt new rows added to database</p>";
+	echo "<p>$cnt new rows added to database. $converted strings converted.</p>";
 
 	$currentDate = date('d.n.Y');
 	echo "<p>set last change to: $currentDate<p>";
