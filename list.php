@@ -24,7 +24,7 @@ $status = getDatabaseStatus($pdo);
 		<div id="status"><?php echo $status ?></div>
 		<div id="search">
 		<form action="list.php">
-			<div>Suchbegriffe z.B.: <span class="example">NRW Grundst&uuml;ck</span></div>
+			<div>Suchbegriffe z.B.: <span class="example">K&ouml;ln Grundst&uuml;ck</span></div>
 			<input class="txtsearch" placeholder="Suchbegriffe" type="text" value="<?php echo $sQuery ?>" name="q" />
 			<input class="btnsearch" type="submit" value="Suche starten" />
 		</form>
