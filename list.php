@@ -41,7 +41,21 @@ $status = getDatabaseStatus($pdo);
 			 	</thead>
 <?php
 
-// split the query string
+
+function printTable($stmt) {
+		while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+		$nr++;
+		$stadt = $row['stadt']; 
+		$plz = $row['plz']; 
+		$bundesland = $row['bundesland']; 
+		$strasse = $row['strasse']; 
+		$objekttyp = $row['type']; 
+		$groesse = $row['groesse']; 
+		print_r("<tr class=\"objrow\"><td>$stadt</td><td>$plz</td><td>$bundesland</td><td>$strasse</td><td>$objekttyp</td><td>$groesse</td></tr>");
+	}
+}
+
+// split th)e query string
 $aTmp = explode(" ", $sQuery);
 $aQ = array();
 for ($i=0; $i<count($aTmp); $i++) {
@@ -56,11 +70,12 @@ $aFilter = array();
 $sql = "select * from tblobject WHERE ";
 $cntQuery = count($aQ);
 if ($cntQuery > 0) {
+	// where on 'stadt'
 	for ($i=0; $i<count($aQ); $i++) {
 		if ($i > 0) {
 			$sql = $sql . "AND ";
 		}
-		$sql = $sql . "(stadt LIKE :q$i OR plz like :q$i OR bundesland like :q$i OR strasse like :q$i OR type like :q$i OR groesse like :q$i) ";
+		$sql = $sql . "(stadt LIKE :q$i) ";
 		$arr = array(":q$i" => "%" . $aQ[$i] . "%");
 		$aFilter = array_merge($aFilter, $arr);
 	}
@@ -68,6 +83,27 @@ if ($cntQuery > 0) {
 	$stmt = $pdo->prepare($sql);
 	$nr = 0;
 	$stmt->execute($aFilter);
+	printTable($stmt);
+
+//	$sql = $sql . " UNION SELECT * FROM tblobject WHERE ";
+
+	$sql = "select * from tblobject WHERE ";
+	// where in all other fields (expect 'stadt')	
+	for ($i=0; $i<count($aQ); $i++) {
+		if ($i > 0) {
+			$sql = $sql . "AND ";
+		}
+		$sql = $sql . "(not stadt LIKE :q$i AND (plz like :q$i OR bundesland like :q$i OR strasse like :q$i OR type like :q$i OR groesse like :q$i)) ";
+		$arr = array(":q$i" => "%" . $aQ[$i] . "%");
+		$aFilter = array_merge($aFilter, $arr);
+	}
+
+	$sql = $sql . " order by stadt,plz,bundesland,strasse";
+	$stmt = $pdo->prepare($sql);
+	$nr = 0;
+	$stmt->execute($aFilter);
+	printTable($stmt);
+	/*
 	while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
 		$nr++;
 		$stadt = $row['stadt']; 
@@ -78,7 +114,7 @@ if ($cntQuery > 0) {
 		$groesse = $row['groesse']; 
 		print_r("<tr class=\"objrow\"><td>$stadt</td><td>$plz</td><td>$bundesland</td><td>$strasse</td><td>$objekttyp</td><td>$groesse</td></tr>");
 	}
-	
+	*/
 }
 ?>
 		 </table>
