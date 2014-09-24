@@ -55,7 +55,7 @@ function printTable($stmt) {
 	}
 }
 
-// split th)e query string
+// split the query string
 $aTmp = explode(" ", $sQuery);
 $aQ = array();
 for ($i=0; $i<count($aTmp); $i++) {
